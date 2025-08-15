@@ -15,25 +15,6 @@ class FlashNewsApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Flash',
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                ' News',
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
         body: HomeScreen(),
       ),
     );

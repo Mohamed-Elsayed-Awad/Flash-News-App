@@ -66,6 +66,27 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           children: [
+            SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Flash',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
+                  ),
+                  Text(
+                    ' News',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
+                  )
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -98,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               text: 'Recommendations',
             ),
             SizedBox(
-              height: 12,
+              height: 25,
             ),
             NewsBuilder(),
           ],

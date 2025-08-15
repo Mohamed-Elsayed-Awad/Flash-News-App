@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flash_news/model/news_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +14,17 @@ class News extends StatelessWidget {
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                newsTileModel.img!.isNotEmpty
-                    ? newsTileModel.img!
-                    : "https://via.placeholder.com/150",
+              child: CachedNetworkImage(
+                imageUrl:
+                    (newsTileModel.img != null && newsTileModel.img!.isNotEmpty)
+                        ? newsTileModel.img!
+                        : "https://via.placeholder.com/150",
                 width: 150,
                 height: 90,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               )),
           SizedBox(
             width: 8,

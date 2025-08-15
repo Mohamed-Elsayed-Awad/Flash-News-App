@@ -2,8 +2,9 @@ import 'package:flash_news/model/news_tile.dart';
 import 'package:flutter/material.dart';
 
 class News extends StatelessWidget {
-  const News({super.key, required this.newsTileModel});
+  const News({super.key, required this.newsTileModel, required this.category});
   final NewsTileModel newsTileModel;
+  final String category;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,7 +28,7 @@ class News extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Business',
+                  category,
                   style: TextStyle(color: Colors.grey),
                 ),
                 Padding(
@@ -35,7 +36,7 @@ class News extends StatelessWidget {
                   child: Text(
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    '${newsTileModel.title}' ?? '',
+                    '${newsTileModel.title}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -45,7 +46,7 @@ class News extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "${newsTileModel.channel} -" ?? "",
+                      "${newsTileModel.channel} -",
                       style: TextStyle(color: Colors.grey, fontSize: 10),
                       overflow: TextOverflow.ellipsis,
                     ),

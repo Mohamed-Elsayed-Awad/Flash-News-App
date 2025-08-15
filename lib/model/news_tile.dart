@@ -13,8 +13,8 @@ class NewsTileModel {
 
   factory NewsTileModel.fromJson(articles) {
     return NewsTileModel(
-        title: articles['title'],
-        channel: articles['source']['name'],
+        title: articles['title'] ?? "This is a title",
+        channel: articles['source']['name'] ?? "Unknown Channel",
         img: articles['urlToImage'],
         url: articles['url']);
   }

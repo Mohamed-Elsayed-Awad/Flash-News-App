@@ -9,10 +9,10 @@ class News extends StatelessWidget {
   News({super.key, required this.newsTileModel, required this.category});
   final NewsTileModel newsTileModel;
   final String category;
-  final timeDate = DateTime.now();
   final timeAgo = DateTime.now().subtract(Duration(minutes: 1));
   @override
   Widget build(BuildContext context) {
+    log(timeago.format(timeAgo));
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -62,7 +62,7 @@ class News extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      timeago.,
+                      ' 8 min ago',
                       style: TextStyle(color: Colors.grey, fontSize: 10),
                     ),
                   ],

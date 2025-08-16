@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flash_news/model/news_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class News extends StatelessWidget {
-  const News({super.key, required this.newsTileModel, required this.category});
+  News({super.key, required this.newsTileModel, required this.category});
   final NewsTileModel newsTileModel;
   final String category;
+  final timeDate = DateTime.now();
+  final timeAgo = DateTime.now().subtract(Duration(minutes: 1));
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,7 +62,7 @@ class News extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      ' 8 min ago',
+                      timeago.,
                       style: TextStyle(color: Colors.grey, fontSize: 10),
                     ),
                   ],

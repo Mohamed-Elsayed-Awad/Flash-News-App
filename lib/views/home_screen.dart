@@ -92,14 +92,23 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomIcon(icon: Icons.menu),
+                CustomIcon(
+                  icon: Icons.menu,
+                  size: 30,
+                ),
                 Row(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0),
-                      child: CustomIcon(icon: Icons.search),
+                      child: CustomIcon(
+                        icon: Icons.search,
+                        size: 30,
+                      ),
                     ),
-                    CustomIcon(icon: Icons.notifications),
+                    CustomIcon(
+                      icon: Icons.notifications,
+                      size: 30,
+                    ),
                   ],
                 )
               ],

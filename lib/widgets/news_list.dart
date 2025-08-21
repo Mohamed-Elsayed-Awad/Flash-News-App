@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 class newsListUi extends StatelessWidget {
   const newsListUi({
     required this.newsList,
-    required this.category,
+
   });
-  final String category;
   final List<NewsTileModel> newsList;
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class newsListUi extends StatelessWidget {
           itemCount: newsList.length,
           itemBuilder: (context, item) {
             return News(
-              category: category,
+
               newsTileModel: newsList[item],
             );
           }),

@@ -44,7 +44,7 @@ class ArticleAppBar extends StatelessWidget {
             ),
             Positioned.fill(
               child: Opacity(
-                opacity: 0.13,
+                opacity: 0.2,
                 child: DecoratedBox(
                     decoration: BoxDecoration(color: Colors.black)),
               ),
@@ -64,7 +64,7 @@ class ArticleAppBar extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Sports',
+                        newsTileModel.category!,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -105,7 +105,7 @@ class ArticleAppBar extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

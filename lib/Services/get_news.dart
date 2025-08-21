@@ -6,7 +6,8 @@ import 'package:flash_news/model/news_tile.dart';
 class GetNews {
   final Dio dio;
   GetNews({required this.dio});
-  Future<List<NewsTileModel>> fetchNews(String category) async {
+  Future<List<NewsTileModel>> fetchNews() async {
+    final String category = "Messi";
     String apiKey = "474378253e974245a7d7039b121e7a71";
     try {
       Response response = await dio
@@ -16,7 +17,7 @@ class GetNews {
       List<NewsTileModel> newsTileList = [];
 
       for (var article in articles) {
-        NewsTileModel newsTile = NewsTileModel.fromJson(article);
+        NewsTileModel newsTile = NewsTileModel.fromJson(article, category);
         newsTileList.add(newsTile);
       }
 

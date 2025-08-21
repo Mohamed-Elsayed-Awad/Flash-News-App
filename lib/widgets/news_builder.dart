@@ -13,12 +13,11 @@ class NewsBuilder extends StatefulWidget {
 
 class _NewsBuilderState extends State<NewsBuilder> {
   var future;
-  String category = "Sports";
   @override
   void initState() {
     super.initState();
 
-    future = GetNews(dio: Dio()).fetchNews(category);
+    future = GetNews(dio: Dio()).fetchNews();
   }
 
   @override
@@ -33,7 +32,6 @@ class _NewsBuilderState extends State<NewsBuilder> {
         } else if (snapshot.hasData) {
           log('message');
           return newsListUi(
-            category: category,
             newsList: snapshot.data!,
           );
         } else {

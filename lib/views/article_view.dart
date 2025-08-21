@@ -1,5 +1,6 @@
 import 'package:flash_news/model/news_tile.dart';
 import 'package:flash_news/widgets/article_app_bar.dart';
+import 'package:flash_news/widgets/news_body.dart';
 import 'package:flutter/material.dart';
 
 class ArticleView extends StatelessWidget {
@@ -12,6 +13,11 @@ class ArticleView extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             ArticleAppBar(newsTileModel: newsTileModel),
+            SliverToBoxAdapter(
+              child: NewsBody(
+                newsTileModel: newsTileModel,
+              ),
+            )
           ],
         ));
   }

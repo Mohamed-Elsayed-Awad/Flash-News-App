@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class News extends StatelessWidget {
-  News({super.key, required this.newsTileModel, required this.category});
+  News({super.key, required this.newsTileModel});
   final NewsTileModel newsTileModel;
-  final String category;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +46,7 @@ class News extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    category,
+                    newsTileModel.category!,
                     style: TextStyle(color: Colors.grey),
                   ),
                   Padding(

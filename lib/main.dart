@@ -1,4 +1,3 @@
-import 'package:flash_news/views/article_view.dart';
 import 'package:flash_news/views/home_screen.dart';
 import 'package:flutter/material.dart';
 

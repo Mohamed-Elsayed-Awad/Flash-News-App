@@ -9,7 +9,7 @@ class NewsBody extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             children: [
               CircleAvatar(
@@ -18,10 +18,16 @@ class NewsBody extends StatelessWidget {
               SizedBox(
                 width: 8,
               ),
-              Text(newsTileModel.channel!)
+              Text(
+                newsTileModel.channel!,
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
             ],
           ),
-        )
+        ),
+        Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+            child: Text(newsTileModel.content!)),
       ],
     );
   }

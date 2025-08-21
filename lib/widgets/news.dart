@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flash_news/model/news_tile.dart';
 import 'package:flash_news/views/article_view.dart';
 import 'package:flutter/material.dart';
-import 'package:timeago/timeago.dart' as timeago;
+
 
 class News extends StatelessWidget {
   News({super.key, required this.newsTileModel});

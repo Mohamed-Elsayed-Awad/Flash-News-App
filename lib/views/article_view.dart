@@ -10,14 +10,29 @@ class ArticleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: [
-            ArticleAppBar(newsTileModel: newsTileModel),
-            SliverToBoxAdapter(
-              child: NewsBody(
-                newsTileModel: newsTileModel,
-              ),
-            )
+        body: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                ArticleAppBar(newsTileModel: newsTileModel),
+                SliverToBoxAdapter(
+                  child: NewsBody(
+                    newsTileModel: newsTileModel,
+                  ),
+                )
+              ],
+            ),
+            Positioned(
+                bottom: 0,
+                child: Container(
+                  height: 70,
+                  width: 430,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [Colors.white, Colors.white.withOpacity(0)])),
+                ))
           ],
         ));
   }

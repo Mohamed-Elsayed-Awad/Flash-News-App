@@ -1,4 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dio/dio.dart';
+import 'package:flash_news/Services/get_news.dart';
+import 'package:flash_news/model/news_tile.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
@@ -28,10 +31,35 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
     },
   ];
 
+  List<NewsTileModel> articleList = [];
+
+  void getArticle() async {
+    NewsTileModel? politicsNews =
+        await GetNews(dio: Dio()).fetchPoliticalNews();
+    NewsTileModel? entertainmentArticle =
+        await GetNews(dio: Dio()).fetchArticle('Entertainment');
+    NewsTileModel? scienceArticle =
+        await GetNews(dio: Dio()).fetchArticle('Science');
+    NewsTileModel? footballArticle =
+        await GetNews(dio: Dio()).fetchArticle('Football');
+    setState(() {
+      articleList.add(politicsNews!);
+      articleList.add(entertainmentArticle!);
+      articleList.add(scienceArticle!);
+      articleList.add(footballArticle!);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getArticle();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
-      itemCount: imgList.length,
+      itemCount: articleList.length,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
           Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -39,28 +67,18 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                imgList[itemIndex]['img'],
-                fit: BoxFit.cover,
-                width: 400,
-              ),
+              child: articleList.isNotEmpty
+                  ? Image.network(
+                      articleList[itemIndex].img!,
+                      fit: BoxFit.cover,
+                      width: 400,
+                    )
+                  : Image.asset(
+                      imgList[itemIndex]['img'],
+                      fit: BoxFit.cover,
+                      width: 400,
+                    ),
             ),
-            // Positioned(
-            //   bottom: 0,
-            //   left: 0,
-            //   right: 0,
-            //   child: Container(
-            //     width: 200,
-            //     height: 60,
-            //     color: Colors.blue.withOpacity(0.3),
-            //     child: Center(
-            //       child: Text(
-            //         imgList[itemIndex]['name'],
-            //         style: TextStyle(fontSize: 19, color: Colors.white),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -71,7 +89,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
         initialPage: 0,
         enableInfiniteScroll: true,
         autoPlay: true,
-        autoPlayInterval: Duration(seconds: 2),
+        autoPlayInterval: Duration(seconds: 3),
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,

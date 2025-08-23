@@ -26,7 +26,7 @@ class _NewsBuilderState extends State<NewsBuilder> {
       future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator(color: Colors.blue));
         } else if (snapshot.hasError) {
           return Text("There are error");
         } else if (snapshot.hasData) {

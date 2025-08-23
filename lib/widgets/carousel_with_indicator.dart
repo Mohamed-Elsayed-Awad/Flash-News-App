@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flash_news/Services/get_news.dart';
@@ -32,7 +33,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   ];
 
   List<NewsTileModel> articleList = [];
-
+  bool isLoading = true;
   void getArticle() async {
     NewsTileModel? politicsNews =
         await GetNews(dio: Dio()).fetchPoliticalNews();
@@ -47,6 +48,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
       articleList.add(entertainmentArticle!);
       articleList.add(scienceArticle!);
       articleList.add(footballArticle!);
+      isLoading = false;
     });
   }
 
@@ -58,44 +60,76 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      itemCount: articleList.length,
-      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-          Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: articleList.isNotEmpty
-                  ? Image.network(
-                      articleList[itemIndex].img!,
-                      fit: BoxFit.cover,
-                      width: 400,
-                    )
-                  : Image.asset(
-                      imgList[itemIndex]['img'],
-                      fit: BoxFit.cover,
-                      width: 400,
-                    ),
+    return (isLoading)
+        ? Center(
+            child: CircularProgressIndicator(
+              color: Colors.blue,
             ),
-          ],
-        ),
-      ),
-      options: CarouselOptions(
-        height: 400,
-        aspectRatio: 16 / 9,
-        viewportFraction: 0.8,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        autoPlayCurve: Curves.fastOutSlowIn,
-        enlargeCenterPage: true,
-        enlargeFactor: 0.3,
-        scrollDirection: Axis.horizontal,
-      ),
-    );
+          )
+        : CarouselSlider.builder(
+            itemCount: articleList.length,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      width: 380,
+                      height: 200,
+                      imageUrl: (articleList[itemIndex].img != null &&
+                              articleList[itemIndex].img!.isNotEmpty)
+                          ? articleList[itemIndex].img!
+                          : "https://via.placeholder.com/150",
+                      placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(color: Colors.blue)),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+                  Positioned.fill(
+                    top: 0,
+                    child: Opacity(
+                        opacity: 0.15,
+                        child: DecoratedBox(
+                            decoration: BoxDecoration(color: Colors.black))),
+                  ),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Container(
+                      height: 32,
+                      width: 105,
+                      child: Center(
+                        child: Text(
+                          articleList[itemIndex].category!,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            options: CarouselOptions(
+              height: 400,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              enlargeFactor: 0.3,
+              scrollDirection: Axis.horizontal,
+            ),
+          );
   }
 }

@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flash_news/Services/get_news.dart';
 import 'package:flash_news/model/news_tile.dart';
+import 'package:flash_news/views/category_screen.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
@@ -92,7 +93,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   Positioned.fill(
                     top: 0,
                     child: Opacity(
-                        opacity: 0.15,
+                        opacity: 0.2,
                         child: DecoratedBox(
                             decoration: BoxDecoration(color: Colors.black))),
                   ),
@@ -103,16 +104,41 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                       height: 32,
                       width: 105,
                       child: Center(
-                        child: Text(
-                          articleList[itemIndex].category!,
-                          style: TextStyle(color: Colors.white),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CategoryScreen(newsTileModel: articleList[itemIndex],))),
+                          child: Text(
+                            articleList[itemIndex].category!,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                       decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(15)),
                     ),
-                  )
+                  ),
+                  Positioned(
+                      bottom: 8,
+                      left: 8,
+                      child: SizedBox(
+                        width: 300,
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CategoryScreen(newsTileModel: articleList[itemIndex],))),
+                          child: Text(
+                            articleList[itemIndex].title!,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ),
+                        ),
+                      ))
                 ],
               ),
             ),

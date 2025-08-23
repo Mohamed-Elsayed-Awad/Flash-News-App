@@ -42,7 +42,7 @@ class GetNews {
       List<dynamic> articles = jsonData['articles'];
 
       if (articles.isNotEmpty) {
-        return NewsTileModel.fromJson(articles[0], category); // أول خبر فقط
+        return NewsTileModel.fromJson(articles[0], category); 
       }
       return null;
     } on DioException catch (e) {
@@ -64,7 +64,7 @@ class GetNews {
       List<dynamic> articles = jsonData['articles'];
 
       if (articles.isNotEmpty) {
-        return NewsTileModel.fromJson(articles[0], category); // أول خبر فقط
+        return NewsTileModel.fromJson(articles[0], category);
       }
       return null;
     } on DioException catch (e) {

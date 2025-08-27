@@ -37,11 +37,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   bool isLoading = true;
   void getArticle() async {
     NewsTileModel? politicsNews =
-        await GetNews(dio: Dio()).fetchPoliticalNews();
+        await GetNews(dio: Dio()).fetchArticle('Business');
     NewsTileModel? entertainmentArticle =
-        await GetNews(dio: Dio()).fetchArticle('Entertainment');
+        await GetNews(dio: Dio()).fetchArticle('Sports');
     NewsTileModel? scienceArticle =
-        await GetNews(dio: Dio()).fetchArticle('Science');
+        await GetNews(dio: Dio()).fetchArticle('Tech');
     NewsTileModel? footballArticle =
         await GetNews(dio: Dio()).fetchArticle('Football');
     setState(() {
@@ -108,7 +108,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CategoryScreen(newsTileModel: articleList[itemIndex],))),
+                                  builder: (context) => CategoryScreen(
+                                        newsTileModel: articleList[itemIndex],
+                                      ))),
                           child: Text(
                             articleList[itemIndex].category!,
                             style: TextStyle(color: Colors.white),
@@ -121,24 +123,28 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                     ),
                   ),
                   Positioned(
-                      bottom: 8,
-                      left: 8,
-                      child: SizedBox(
-                        width: 300,
-                        child: GestureDetector(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CategoryScreen(newsTileModel: articleList[itemIndex],))),
-                          child: Text(
-                            articleList[itemIndex].title!,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
+                    bottom: 8,
+                    left: 8,
+                    child: SizedBox(
+                      width: 300,
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CategoryScreen(
+                                      newsTileModel: articleList[itemIndex],
+                                    ))),
+                        child: Text(
+                          maxLines: 2,
+                          articleList[itemIndex].title!,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
                         ),
-                      ))
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

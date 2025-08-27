@@ -6,19 +6,23 @@ import 'package:flash_news/model/news_tile.dart';
 import 'package:flash_news/widgets/news_list.dart';
 import 'package:flutter/material.dart';
 
-class NewsBuilder extends StatefulWidget {
+class HomeSearchedNewsBuilder extends StatefulWidget {
+  String? category;
+
+  HomeSearchedNewsBuilder({super.key, required this.category});
+
   @override
-  State<NewsBuilder> createState() => _NewsBuilderState();
+  State<HomeSearchedNewsBuilder> createState() =>
+      _HomeSearchedNewsBuilderState();
 }
 
-class _NewsBuilderState extends State<NewsBuilder> {
-  String category = 'General';
+class _HomeSearchedNewsBuilderState extends State<HomeSearchedNewsBuilder> {
   var future;
   @override
   void initState() {
     super.initState();
 
-    future = GetNews(dio: Dio()).fetchNewsForHomeBodyState(category);
+    future = GetNews(dio: Dio()).fetchNews(widget.category!);
   }
 
   @override

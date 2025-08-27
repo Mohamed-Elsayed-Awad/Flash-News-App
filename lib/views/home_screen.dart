@@ -1,11 +1,12 @@
-import 'package:flash_news/views/empty_Screen.dart';
-import 'package:flash_news/widgets/carousel_with_indicator.dart';
-import 'package:flash_news/widgets/custom_headline.dart';
-import 'package:flash_news/widgets/custom_icon.dart';
-
-import 'package:flash_news/widgets/news_builder.dart';
+import 'package:flash_news/Cubits/getNewsCubit/get_news_cubit.dart';
+import 'package:flash_news/Cubits/getNewsCubit/get_news_states.dart';
+import 'package:flash_news/views/failure_screen.dart';
+import 'package:flash_news/views/home_body_view.dart';
+import 'package:flash_news/views/home_searched_news.dart';
+import 'package:flash_news/views/search_Screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,12 +17,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Widget> screens = [
-    EmptyScreen(text: '1'),
-    EmptyScreen(text: '2'),
-    EmptyScreen(text: '3'),
-    EmptyScreen(text: '4'),
-  ];
+  int selectedIndex = 0;
+  void goToHome() {
+    setState(() {
+      selectedIndex = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +56,18 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
           child: GNav(
+            selectedIndex: selectedIndex,
             rippleColor: Colors.white,
             padding: EdgeInsets.all(12),
             tabBorderRadius: 200,
             gap: 10,
             activeColor: Colors.white,
             tabBackgroundColor: Colors.blue,
-            onTabChange: (s) {},
+            onTabChange: (index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
             duration: Duration(milliseconds: 400),
             tabs: [
               GButton(
@@ -85,56 +91,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomIcon(
-                  icon: Icons.menu,
-                  size: 30,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: CustomIcon(
-                        icon: Icons.search,
-                        size: 30,
-                      ),
-                    ),
-                    CustomIcon(
-                      icon: Icons.notifications,
-                      size: 30,
-                    ),
-                  ],
-                )
-              ],
-            ),
-            SizedBox(
-              height: 24,
-            ),
-            CustomHeadline(
-              text: 'Breaking News',
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            SizedBox(height: 200, child: CarouselWithIndicatorDemo()),
-            SizedBox(
-              height: 28,
-            ),
-            CustomHeadline(
-              text: 'Recommendations',
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            NewsBuilder(),
-          ],
-        ),
+      body: IndexedStack(
+        index: selectedIndex,
+        children: [
+          BlocBuilder<GetNewsCubit, NewsStates>(builder: (context, state) {
+            if (state is GeneralNewsState) {
+              return HomeBodyView();
+            } else if (state is NewsState) {
+              return HomeSearchedNews(category: state.category);
+            } else {
+              return FailureScreen();
+            }
+          }),
+          SearchScreen(
+            onDone: goToHome,
+          ),
+        ],
       ),
     );
   }

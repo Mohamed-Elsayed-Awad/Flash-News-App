@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (state is GeneralNewsState) {
               return HomeBodyView();
             } else if (state is NewsState) {
-              return HomeSearchedNews(category: state.category);
+              return HomeSearchedNews();
             } else {
               return FailureScreen();
             }

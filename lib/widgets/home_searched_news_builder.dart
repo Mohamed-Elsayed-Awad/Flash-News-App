@@ -7,9 +7,8 @@ import 'package:flash_news/widgets/news_list.dart';
 import 'package:flutter/material.dart';
 
 class HomeSearchedNewsBuilder extends StatefulWidget {
-  String? category;
 
-  HomeSearchedNewsBuilder({super.key, required this.category});
+  HomeSearchedNewsBuilder({super.key});
 
   @override
   State<HomeSearchedNewsBuilder> createState() =>
@@ -17,12 +16,13 @@ class HomeSearchedNewsBuilder extends StatefulWidget {
 }
 
 class _HomeSearchedNewsBuilderState extends State<HomeSearchedNewsBuilder> {
+  String? category;
   var future;
   @override
   void initState() {
     super.initState();
 
-    future = GetNews(dio: Dio()).fetchNews(widget.category!);
+    future = GetNews(dio: Dio()).fetchNews(category!);
   }
 
   @override

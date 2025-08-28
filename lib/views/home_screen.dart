@@ -94,15 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: selectedIndex,
         children: [
-          BlocBuilder<GetNewsCubit, NewsStates>(builder: (context, state) {
-            if (state is GeneralNewsState) {
-              return HomeBodyView();
-            } else if (state is NewsState) {
-              return HomeSearchedNews();
-            } else {
-              return FailureScreen();
-            }
-          }),
+          HomeBodyView(),
           SearchScreen(
             onDone: goToHome,
           ),

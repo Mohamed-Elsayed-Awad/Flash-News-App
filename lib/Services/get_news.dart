@@ -7,8 +7,7 @@ class GetNews {
   final Dio dio;
   GetNews({required this.dio});
   Future<List<NewsTileModel>> fetchNews(String category) async {
-
-    String apiKey = "474378253e974245a7d7039b121e7a71";
+    String apiKey = "39f1b6f12583460fa7996248089458e5";
     try {
       Response response = await dio
           .get('https://newsapi.org/v2/everything?q=$category&apiKey=$apiKey');
@@ -30,9 +29,9 @@ class GetNews {
       return [];
     }
   }
+
   Future<List<NewsTileModel>> fetchNewsForHomeBodyState(String category) async {
-
-    String apiKey = "474378253e974245a7d7039b121e7a71";
+    String apiKey = "39f1b6f12583460fa7996248089458e5";
     try {
       Response response = await dio
           .get('https://newsapi.org/v2/everything?q=$category&apiKey=$apiKey');
@@ -54,10 +53,9 @@ class GetNews {
       return [];
     }
   }
-
 
   Future<NewsTileModel?> fetchArticle(String category) async {
-    String apiKey = "474378253e974245a7d7039b121e7a71";
+    String apiKey = "39f1b6f12583460fa7996248089458e5";
     try {
       Response response = await dio.get(
         'https://newsapi.org/v2/everything?q=$category&apiKey=$apiKey',

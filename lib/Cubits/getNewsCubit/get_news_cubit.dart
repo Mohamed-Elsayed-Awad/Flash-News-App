@@ -8,11 +8,12 @@ class GetNewsCubit extends Cubit<NewsStates> {
   GetNewsCubit() : super(GeneralNewsState());
   List<NewsTileModel> newsList = [];
   void fetchNews({required String category}) async {
+    emit(LoadingNewsState());
     try {
       newsList = await GetNews(dio: Dio()).fetchNews(category);
-      emit(NewsState());
+      emit(NewsState(newList: newsList));
     } catch (e) {
-      emit(FailureState());
+      emit(FailureState(message: e.toString()));
     }
   }
 }

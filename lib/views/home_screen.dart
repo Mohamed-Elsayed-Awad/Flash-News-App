@@ -4,7 +4,6 @@ import 'package:flash_news/views/failure_screen.dart';
 import 'package:flash_news/views/home_body_view.dart';
 import 'package:flash_news/views/home_searched_news.dart';
 import 'package:flash_news/views/search_Screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -94,7 +93,24 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: selectedIndex,
         children: [
-          HomeBodyView(),
+          BlocBuilder<GetNewsCubit, NewsStates>(
+            builder: (context, state) {
+              if (state is GeneralNewsState) {
+                return HomeBodyView();
+              } else if (state is LoadingNewsState) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ));
+              } else if (state is NewsState) {
+                return HomeSearchedNews(
+                  category: state.newList[1].category!,
+                );
+              } else {
+                return FailureScreen();
+              }
+            },
+          ),
           SearchScreen(
             onDone: goToHome,
           ),

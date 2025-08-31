@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -8,7 +10,8 @@ import 'package:flutter/material.dart';
 
 class HomeSearchedNewsBuilder extends StatefulWidget {
 
-  HomeSearchedNewsBuilder({super.key});
+  HomeSearchedNewsBuilder({super.key, required this.category});
+  String? category;
 
   @override
   State<HomeSearchedNewsBuilder> createState() =>
@@ -16,13 +19,12 @@ class HomeSearchedNewsBuilder extends StatefulWidget {
 }
 
 class _HomeSearchedNewsBuilderState extends State<HomeSearchedNewsBuilder> {
-  String? category;
   var future;
   @override
   void initState() {
     super.initState();
 
-    future = GetNews(dio: Dio()).fetchNews(category!);
+    future = GetNews(dio: Dio()).fetchNews(widget.category!);
   }
 
   @override

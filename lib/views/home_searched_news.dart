@@ -5,8 +5,8 @@ import 'package:flash_news/widgets/home_searched_news_builder.dart';
 import 'package:flutter/material.dart';
 
 class HomeSearchedNews extends StatelessWidget {
-  const HomeSearchedNews({super.key});
-
+  const HomeSearchedNews({super.key,required this.category});
+final String category;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class HomeSearchedNews extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            HomeSearchedNewsBuilder(),
+            HomeSearchedNewsBuilder(category: category,),
           ],
         ),
       ),

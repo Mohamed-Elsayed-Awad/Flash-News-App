@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flash_news/model/news_tile.dart';
 import 'package:flash_news/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
@@ -110,18 +108,20 @@ class _ArticleAppBarState extends State<ArticleAppBar> {
                 children: [
                   Container(
                     height: 30,
-                    width: 80,
                     decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Center(
-                      child: Text(
-                        widget.newsTileModel.category!,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          widget.newsTileModel.category!,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

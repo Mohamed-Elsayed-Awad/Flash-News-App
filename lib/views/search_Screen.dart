@@ -24,7 +24,8 @@ class SearchScreen extends StatelessWidget {
               ),
               TextField(
                 onSubmitted: (value) {
-                 
+                  BlocProvider.of<GetNewsCubit>(context)
+                      .fetchNews(category: value);
                   onDone();
                 },
                 decoration: InputDecoration(

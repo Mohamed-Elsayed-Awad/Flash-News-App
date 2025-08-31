@@ -7,6 +7,8 @@ import 'package:flash_news/views/category_screen.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
+  const CarouselWithIndicatorDemo({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
@@ -44,13 +46,15 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
         await GetNews(dio: Dio()).fetchArticle('Tech');
     NewsTileModel? footballArticle =
         await GetNews(dio: Dio()).fetchArticle('Football');
-    setState(() {
-      articleList.add(politicsNews!);
-      articleList.add(entertainmentArticle!);
-      articleList.add(scienceArticle!);
-      articleList.add(footballArticle!);
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        articleList.add(politicsNews!);
+        articleList.add(entertainmentArticle!);
+        articleList.add(scienceArticle!);
+        articleList.add(footballArticle!);
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -102,7 +106,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                     left: 8,
                     child: Container(
                       height: 32,
-                      width: 105,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(15)),
                       child: Center(
                         child: GestureDetector(
                           onTap: () => Navigator.push(
@@ -111,15 +117,16 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                                   builder: (context) => CategoryScreen(
                                         newsTileModel: articleList[itemIndex],
                                       ))),
-                          child: Text(
-                            articleList[itemIndex].category!,
-                            style: TextStyle(color: Colors.white),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Text(
+                              articleList[itemIndex].category!,
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
                   Positioned(

@@ -207,7 +207,7 @@ class SignUpScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'You have already an account ? ',
+                            'You already have an account ? ',
                             style: TextStyle(
                                 color: const Color.fromARGB(120, 0, 0, 0)),
                           ),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473726195771",
+    "project_id": "flashnews-56393",
+    "storage_bucket": "flashnews-56393.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473726195771:android:c6e4e931c3c5cd0740641e",
+        "android_client_info": {
+          "package_name": "com.example.flash_news"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjP1afA6YzhFhQvJ7yYdycyzC6Shl5Izk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

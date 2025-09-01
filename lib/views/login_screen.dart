@@ -1,9 +1,15 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_news/views/home_screen.dart';
 import 'package:flash_news/views/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
+  LoginScreen({super.key});
+  String? email;
+  String? password;
+  GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,6 +17,7 @@ class LoginScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Form(
+          key: formKey,
           child: ListView(
             children: [
               SizedBox(
@@ -73,6 +80,14 @@ class LoginScreen extends StatelessWidget {
                         height: 8,
                       ),
                       TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'This feild is required';
+                          }
+                        },
+                        onChanged: (value) {
+                          email = value;
+                        },
                         cursorColor: Colors.blue,
                         decoration: InputDecoration(
                           filled: true,
@@ -114,6 +129,14 @@ class LoginScreen extends StatelessWidget {
                         height: 8,
                       ),
                       TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'This feild is required';
+                          }
+                        },
+                        onChanged: (value) {
+                          password = value;
+                        },
                         obscureText: true,
                         cursorColor: Colors.blue,
                         decoration: InputDecoration(
@@ -150,7 +173,39 @@ class LoginScreen extends StatelessWidget {
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.blue,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              try {
+                                UserCredential userCredential =
+                                    await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email!, password: password!);
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Success'),
+                                  ),
+                                );
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              } on FirebaseAuthException catch (e) {
+                                if (e.code == 'user-not-found') {
+                                  print('No user found for that email.');
+                                } else if (e.code == 'wrong-password') {
+                                  print(
+                                      'Wrong password provided for that user.');
+                                }
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Failed'),
+                                ),
+                              );
+                            }
+                          },
                           child: Text(
                             'Login',
                             style: TextStyle(color: Colors.white),

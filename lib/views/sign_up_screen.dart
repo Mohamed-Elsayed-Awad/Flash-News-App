@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
-
+  SignUpScreen({super.key});
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(
-                height: 60,
+                height: 100,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +45,7 @@ class SignUpScreen extends StatelessWidget {
                 height: 70,
               ),
               Container(
-                height: 480,
+                height: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
@@ -60,47 +64,47 @@ class SignUpScreen extends StatelessWidget {
                             fontSize: 20,
                             color: Colors.black),
                       ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Name',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 15),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextFormField(
-                        cursorColor: Colors.blue,
-                        decoration: InputDecoration(
-                          filled: true,
-                          focusColor: Colors.blue,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                          hintStyle: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w300),
-                          fillColor: Color(0xffE8ECF3),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Color(0xffE8ECF3))),
-                          disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Color(0xffE8ECF3))),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Color(0xffE8ECF3))),
-                          hintText: 'Enter Your name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(
-                              color: const Color.fromARGB(142, 211, 226, 251),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 30,
+                      // ),
+                      // Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Text(
+                      //     'Name',
+                      //     style: TextStyle(
+                      //         fontWeight: FontWeight.w400, fontSize: 15),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 8,
+                      // ),
+                      // TextFormField(
+                      //   cursorColor: Colors.blue,
+                      //   decoration: InputDecoration(
+                      //     filled: true,
+                      //     focusColor: Colors.blue,
+                      //     contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      //     hintStyle: TextStyle(
+                      //         fontSize: 12, fontWeight: FontWeight.w300),
+                      //     fillColor: Color(0xffE8ECF3),
+                      //     enabledBorder: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(30),
+                      //         borderSide: BorderSide(color: Color(0xffE8ECF3))),
+                      //     disabledBorder: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(30),
+                      //         borderSide: BorderSide(color: Color(0xffE8ECF3))),
+                      //     focusedBorder: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(30),
+                      //         borderSide: BorderSide(color: Color(0xffE8ECF3))),
+                      //     hintText: 'Enter Your name',
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(30),
+                      //       borderSide: BorderSide(
+                      //         color: const Color.fromARGB(142, 211, 226, 251),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 16,
                       ),
@@ -116,6 +120,9 @@ class SignUpScreen extends StatelessWidget {
                         height: 8,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          email = value;
+                        },
                         cursorColor: Colors.blue,
                         decoration: InputDecoration(
                           filled: true,
@@ -157,6 +164,9 @@ class SignUpScreen extends StatelessWidget {
                         height: 8,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          password = value;
+                        },
                         obscureText: true,
                         cursorColor: Colors.blue,
                         decoration: InputDecoration(
@@ -193,9 +203,49 @@ class SignUpScreen extends StatelessWidget {
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.blue,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            try {
+                              UserCredential userCredential = await FirebaseAuth
+                                  .instance
+                                  .createUserWithEmailAndPassword(
+                                      email: email!, password: password!);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  elevation: 2,
+                                  // margin: EdgeInsets.all(16),
+                                  padding: EdgeInsets.all(16),
+                                  backgroundColor: Colors.green,
+                                  content: Text('Success'),
+                                ),
+                              );
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'weak-password') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'The password provided is too weak.'),
+                                  ),
+                                );
+                              } else if (e.code == 'email-already-in-use') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${e.code}'),
+                                  ),
+                                );
+                                print('there was an error, please try again');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${e.code}'),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
                           child: Text(
-                            'Login',
+                            'Register',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -212,7 +262,9 @@ class SignUpScreen extends StatelessWidget {
                                 color: const Color.fromARGB(120, 0, 0, 0)),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
                             child: Text('Login'),
                           )
                         ],
